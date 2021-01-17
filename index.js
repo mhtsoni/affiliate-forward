@@ -2,6 +2,15 @@ const venom   = require('venom-bot')
 const config  = require('config')
 const axios= require('axios')
 const fs = require('fs');
+const express = require("express");
+const app=express();
+const port=process.env.PORT || 3000;
+app.set('view engine', 'ejs')//Setting the view Engine
+app.use(express.static('public'))//creating a relative path to look for static files
+
+app.get('/',(req,res)=>{
+  res.render("./index.ejs");
+})
 venom.create('sessionMarketing', (base64Qr, asciiQR) => {
 	// To log the QR in the terminal
 	console.log(asciiQR);
@@ -63,3 +72,5 @@ function exportQR(qrCode, path) {
 	// Creates 'marketing-qr.png' file
 	fs.writeFileSync(path, imageBuffer);
   }
+  
+app.listen(port,()=>console.log("Listning on port "+port))
