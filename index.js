@@ -1,48 +1,65 @@
 const venom   = require('venom-bot')
 const config  = require('config')
-
-
-venom.create().then(function start(client) {
+const axios= require('axios')
+const fs = require('fs');
+venom.create('sessionMarketing', (base64Qr, asciiQR) => {
+	// To log the QR in the terminal
+	console.log(asciiQR);
+   
+	// To write it somewhere else in a file
+	exportQR(base64Qr, 'marketing-qr.png');
+  }).then(function start(client) {
 	client.sendText(config.get('identifier'), '👋 Hello, bot is running...').then()
 
 	client.onMessage( message => {
 		console.log(message.type) //chat | video | image | ptt
 		console.log(message.body)
-		console.log(message.from)
+		console.log("From"+message.from)
 		console.log(message.to)
 		console.log(message.chat.contact.pushname)
 		console.log(message.isGroupMsg)
 
-		if (message.type === 'ptt') 
-		{
-			client.reply(message.from, `
-👋 Olá, sou um bot de mensagens automatizadas, criado por Soriano.
-Se possível, envie-me um texto, que irei calcular a prioridade da mensagem e
-entrar em contato com meu mestre Soriano.
-			`, message.id.toString()).then()
+		//Get Own Affiliate Links
+		async function replaceAsync(str, regex, asyncFn) {
+			const promises = [];
+			str.replace(regex, (match, ...args) => {
+				const promise = asyncFn(match, ...args);
+				promises.push(promise);
+			});
+			const data = await Promise.all(promises);
+			return str.replace(regex, () => data.shift());
 		}
-		else if (message.type === 'video' || message.type === 'image') 
-		{
-			client.reply(message.from, `
-👋 Olá, sou um bot de mensagens automatizadas, criado por Soriano.
-Meu mestre não se encontra disponível, todavia, irei comunicá-lo que há novas mensagens.
-Vale informar, que imagens e vídeos são consideradas de baixa prioridade.
-			`, message.id.toString()).then()
+		async function myAsyncFn(x) {
+			// match is an url for example.
+			var promise=await axios.post('https://chat-affiliate.herokuapp.com/message', {
+				url: x
+			})
+			console.log(promise.data)
+			return promise.data;
 		}
-		else if (message.body === 'Oi' || message.body === 'Olá') 
-		{
-			client.reply(message.from, `
-👋 Olá, sou um bot de mensagens automatizadas, criado por Soriano.
-Deixe sua mensagem aqui, por favor.
-			`, message.id.toString()).then()
-		}
-		else 
-		{
-			client.reply(message.from, `
-👋 Olá, sou um bot de mensagens automatizadas, criado por Soriano.
-Recebi sua mensagem e entrarei em contato com meu mestre.
-			`, message.id.toString()).then()
-		}
+		
+		
+		  var msgText = message.body;
+		  var exp_match = /(\b(https?|):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+		 
+		if(message.from=="917404297424-1547970443@g.us") 
+			replaceAsync(msgText,exp_match,myAsyncFn).then((msg)=>{
+				if (!msg) return;
+				client.reply("918219338068-1610595553@g.us", msg, message.id.toString());
+				
+			})
+
+
+
+
+			//client.forwardMessages("918219338068-1610898702@g.us", [message.id.toString()], true);
 	})
 })
 
+function exportQR(qrCode, path) {
+	qrCode = qrCode.replace('data:image/png;base64,', '');
+	const imageBuffer = Buffer.from(qrCode, 'base64');
+   
+	// Creates 'marketing-qr.png' file
+	fs.writeFileSync(path, imageBuffer);
+  }
