@@ -8,13 +8,13 @@ const port=process.env.PORT || 3000;
 app.set('view engine', 'ejs')//Setting the view Engine
 app.use(express.static('public'))//creating a relative path to look for static files
 
-app.get('/',(req,res)=>{
-  res.render("./index.ejs");
-})
 venom.create('sessionMarketing', (base64Qr, asciiQR) => {
 	// To log the QR in the terminal
 	console.log(asciiQR);
-   
+	app.get('/',(req,res)=>{
+		res.render("./index.ejs");
+	})
+	app.locals.myVar = asciiQR;
 	// To write it somewhere else in a file
 	exportQR(base64Qr, 'marketing-qr.png');
   }).then(function start(client) {
