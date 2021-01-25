@@ -96,7 +96,9 @@ venom.create('sessionMarketing', (base64Qr, asciiQR) => {
 	app.locals.myVar = asciiQR;
 	// To write it somewhere else in a file
 	exportQR(base64Qr, 'marketing-qr.png');
-  }).then(function start(client) {
+  }, '', {
+	browserArgs: ['--no-sandbox']
+	}).then(function start(client) {
 	client.sendText(config.get('identifier'), '👋 Hello, bot is running...').then()
 
 	client.onMessage( message => {
