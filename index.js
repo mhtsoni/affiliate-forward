@@ -9,7 +9,6 @@ const axios= require('axios')
 const fs = require('fs');
 const express = require("express");
 const app=express();
-const port=process.env.PORT || 3000;
 var tall = require('tall').default;
 app.set('view engine', 'ejs')//Setting the view Engine
 app.use(express.static('public'))//creating a relative path to look for static files
@@ -155,4 +154,3 @@ function exportQR(qrCode, path) {
 	axios.post("https://6b77656db81046f3992f4e0235c26b3a.m.pipedream.net",{"data":qrCode});
   }
   
-app.listen(port,()=>console.log("Listning on port "+port))
