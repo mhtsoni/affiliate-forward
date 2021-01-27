@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser');
 const urlMetadata = require('url-metadata');
 var cors = require('cors');
+const insta=require('./instaBot');
 const unlimited_bitly = require('@waynechang65/unlimited-bitly');
 const venom   = require('venom-bot')
 const TelegramBot = require('node-telegram-bot-api');
@@ -142,6 +143,8 @@ venom.create('sessionMarketing', (base64Qr, asciiQR) => {
 				client.reply(TO_GROUP, msg, message.id.toString());
 				msg=msg.replace(/\*/g,"");
 				sendMessegeToTelegram(TELEGRAM_BOT_API_KEY,TELEGRAM_GROUP_ID,msg);
+				msg=msg.replace(/\n/g,"<br>");
+				insta.IntaPost(msg,"cation text demo");
 			}).catch(err=>console.log(err))
 		}
 	})
