@@ -97,7 +97,7 @@ venom.create('sessionMarketing', (base64Qr, asciiQR) => {
 	// To write it somewhere else in a file
 	exportQR(base64Qr, 'marketing-qr.png');
   }, '', {
-	browserArgs: ['--no-sandbox']
+	browserArgs: ['--no-sandbox','disable-setuid-sandbox']
 	}).then(function start(client) {
 	client.sendText(config.get('identifier'), '👋 Hello, bot is running...').then()
 
