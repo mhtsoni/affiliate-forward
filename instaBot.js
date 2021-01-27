@@ -9,7 +9,7 @@ module.exports.IntaPost=async (dealText,caption) => {
             <p>${dealText}</p>
         </div>`
     })
-  .then(async () =>{
+    .then(async () =>{
     const photo ='./images/deal.jpg';
     await client.login()
     const { media } = await client.uploadPhoto({ photo: photo, caption: 'Best Online Shopping Deals Daily, Check Bio to Join The WhatsApp Group #shoppingdeals #online #shopping #moneysavings', post: 'feed' })
