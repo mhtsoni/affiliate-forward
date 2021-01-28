@@ -76,11 +76,11 @@ const BITLY_KEYS = [
   }
  
 //PROD
-//const FROM_GROUP="917027157557-1601873581@g.us";
-//const TO_GROUP="918219338068-1610595553@g.us";
+const FROM_GROUP="917027157557-1601873581@g.us";
+const TO_GROUP="918219338068-1610595553@g.us";
 //TEST
-const FROM_GROUP="919917813876@c.us";
-const TO_GROUP="919917813876@c.us";
+//const FROM_GROUP="919917813876@c.us";
+//const TO_GROUP="919917813876@c.us";
 const TELEGRAM_BOT_API_KEY="1577526213:AAGgoShqtrQcwYcd_WXb_iKN2NBFLBxH1xY";
 const TELEGRAM_GROUP_ID="-482466901";
 
@@ -144,7 +144,7 @@ venom.create('sessionMarketing', (base64Qr, asciiQR) => {
 				msg=msg.replace(/\*/g,"");
 				await sendMessegeToTelegram(TELEGRAM_BOT_API_KEY,TELEGRAM_GROUP_ID,msg);
 				msg=msg.replace(/\n/g,"<br>");
-				await insta.IntaPost(msg,"cation text demo");
+				//await insta.IntaPost(msg,"cation text demo");
 			}).catch(err=>console.log(err))
 		}
 	})
