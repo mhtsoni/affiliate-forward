@@ -138,13 +138,13 @@ venom.create('sessionMarketing', (base64Qr, asciiQR) => {
 		var exp_match = /(\b(https?|):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
 		
 		if(message.from==FROM_GROUP && message.type!=="image") {
-			replaceAsync(msgText,exp_match,myAsyncFn).then((msg)=>{
+			replaceAsync(msgText,exp_match,myAsyncFn).then(async (msg)=>{
 				if (!msg) return;
-				client.reply(TO_GROUP, msg, message.id.toString());
+				await client.reply(TO_GROUP, msg, message.id.toString());
 				msg=msg.replace(/\*/g,"");
-				sendMessegeToTelegram(TELEGRAM_BOT_API_KEY,TELEGRAM_GROUP_ID,msg);
+				await sendMessegeToTelegram(TELEGRAM_BOT_API_KEY,TELEGRAM_GROUP_ID,msg);
 				msg=msg.replace(/\n/g,"<br>");
-				insta.IntaPost(msg,"cation text demo");
+				await insta.IntaPost(msg,"cation text demo");
 			}).catch(err=>console.log(err))
 		}
 	})
