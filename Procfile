@@ -1,1 +1,1 @@
-worker: forever start index.js
+worker: forever -c nodejs start index.js
